@@ -1,0 +1,7 @@
+<div class="grid">
+    <app-device *ngFor="let device of devices" [name]="device.name" [status]="device.status"></app-device>
+</div>
+
+<button mat-fab color="primary" class="add-button" (click)="addDevice()">
+    <mat-icon>add</mat-icon>
+</button>

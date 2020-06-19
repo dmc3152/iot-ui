@@ -1,9 +1,9 @@
 <mat-card>
-    <nav mat-tab-nav-bar mat-stretch-tabs>
-        <a mat-tab-link (click)="activeLink = 'link'" [active]="activeLink == 'link'">
+    <nav mat-tab-nav-bar mat-stretch-tabs backgroundColor="primary">
+        <a mat-tab-link routerLink="login" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive">
             Login
         </a>
-        <a mat-tab-link (click)="activeLink = 'link2'" [active]="activeLink == 'link2'">
+        <a mat-tab-link routerLink="register" routerLinkActive #rla2="routerLinkActive" [active]="rla2.isActive">
             Register
         </a>
     </nav>
@@ -11,3 +11,4 @@
         <router-outlet></router-outlet>
     </mat-card-content>
 </mat-card>
+  

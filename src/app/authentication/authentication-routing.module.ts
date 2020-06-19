@@ -8,8 +8,11 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: 'authentication',
+    redirectTo: 'authentication/login',
+  },
+  {
+    path: 'authentication',
     component: AuthenticationComponent,
-    // outlet: 'authentication',
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
