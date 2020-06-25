@@ -1,18 +1,20 @@
 <div class="container">
     <h2 style="display: flex; align-items: center; justify-content: space-between;">
-        {{device.name}}
+        {{dataSchema.name}}
         <a mat-icon-button routerLink=".."><mat-icon>close</mat-icon></a>
     </h2>
 
     <mat-card class="schema-card">
-        <h2>Data Schema</h2>
-
         <mat-card-content>
-            <app-data-schema-node [node]="device" (addNode)="addNode($event)"></app-data-schema-node>
+            <div class="data-list" style="margin-bottom: 16px;">
+                <div class="data-list-label">Key:</div><div>{{dataSchema.key}}</div>
+                <div class="data-list-label">Unit:</div><div>{{dataSchema.unit}}</div>
+            </div>
+
+            <app-data-schema-node [node]="dataSchema" (addNode)="addNode($event)"></app-data-schema-node>
         </mat-card-content>
 
         <mat-card-actions align="end">
-            <button mat-button>Add</button>
             <button mat-button>Edit</button>
             <button mat-button>Delete</button>
         </mat-card-actions>

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Add Data Schema</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="addSchemaForm" novalidate>
+        <mat-form-field class="full-width">
+            <mat-label>Data Schema</mat-label>
+            <mat-select name="chosenSchema" formControlName="chosenSchema" required>
+                <mat-option *ngFor="let schema of dataSchemas" [value]="schema">
+                    {{schema.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="addSchemaForm.value" [disabled]="addSchemaForm.invalid">Add</button>
+</mat-dialog-actions>

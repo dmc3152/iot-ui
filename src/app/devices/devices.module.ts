@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { DeviceComponent } from './device/device.component';
 import { DeviceDetailsComponent } from './device-details/device-details.component';
 import { AddDeviceComponent } from './add-device/add-device.component';
+import { DataSchemasModule } from '../data-schemas/data-schemas.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { AddDeviceComponent } from './add-device/add-device.component';
   imports: [
     CommonModule,
     SharedModule,
+    DataSchemasModule,
     DevicesRoutingModule
   ]
 })

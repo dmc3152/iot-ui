@@ -1,10 +1,185 @@
-<h2 mat-dialog-title>Add Device</h2>
+<div class="container">
+    <h2 style="display: flex; align-items: center; justify-content: space-between;">
+        Add Device
+        <a mat-icon-button routerLink=".."><mat-icon>close</mat-icon></a>
+    </h2>
+
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Information</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <form [formGroup]="addDeviceForm" novalidate>
+                <mat-form-field class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Thermometer" formControlName="name" required>
+                </mat-form-field>
+            </form>
+
+            <mat-action-row>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle [disabled]="addDeviceForm.invalid">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Data Schema</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-data-schema-node [node]="device" [addOnly]="true"></app-data-schema-node>
+
+            <mat-action-row style="justify-content: space-between; padding-left: 8px;">
+                <div>
+                    <button mat-button color="warn" (click)="prevStep()" style="margin: 0;">Previous</button>
+                </div>
+                <div>
+                    <button mat-button color="primary" (click)="addSchema()">Add</button>
+                    <button mat-button color="primary" (click)="save(addDeviceForm)">Save</button>
+                </div>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- <mat-card>
+        <mat-card-header>
+            <mat-card-title>Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="wrapper">
+            <form [formGroup]="addDeviceForm" novalidate>
+                <mat-form-field class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Thermometer" formControlName="name">
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card style="margin-top: 8px;">
+        <mat-card-header>
+            <mat-card-title>Data Schema</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="wrapper">
+            <mat-accordion multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Horizontal Position
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="data-list" style="margin-bottom: 16px;">
+                        <div class="data-list-label">Key:</div>
+                        <div>x</div>
+                        <div class="data-list-label">Unit:</div>
+                        <div>pixels</div>
+                    </div>
+
+                    <mat-accordion multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Horizontal Position
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="data-list" style="margin-bottom: 16px;">
+                                <div class="data-list-label">Key:</div>
+                                <div>x</div>
+                                <div class="data-list-label">Unit:</div>
+                                <div>pixels</div>
+                            </div>
+
+                            <mat-accordion multi>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Horizontal Position
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="data-list" style="margin-bottom: 16px;">
+                                        <div class="data-list-label">Key:</div>
+                                        <div>x</div>
+                                        <div class="data-list-label">Unit:</div>
+                                        <div>pixels</div>
+                                    </div>
+
+                                    <div class="align-right" style="margin-top: 16px;">
+                                        <a mat-button>Add</a>
+                                    </div>
+
+                                    <mat-action-row>
+                                        <button mat-button color="primary">Edit</button>
+                                        <button mat-button color="primary">Delete</button>
+                                    </mat-action-row>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+                            <div class="align-right" style="margin-top: 16px;">
+                                <a mat-button>Add</a>
+                            </div>
+
+                            <mat-action-row>
+                                <button mat-button color="primary">Edit</button>
+                                <button mat-button color="primary">Delete</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <div class="align-right" style="margin-top: 16px;">
+                        <a mat-button>Add</a>
+                    </div>
+
+                    <mat-action-row>
+                        <button mat-button color="primary">Edit</button>
+                        <button mat-button color="primary">Delete</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Self aware panel
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Currently I am
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                    <div class="align-right" style="margin-top: 16px;">
+                        <a mat-button>Add</a>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+        <mat-card-actions class="align-right">
+            <a mat-button>Add</a>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card style="margin-top: 8px;" class="align-right">
+        <a mat-button routerLink="..">Cancel</a>
+        <a mat-button>Save</a>
+    </mat-card> -->
+</div>
+
+<!-- <h2 mat-dialog-title>Add Device</h2>
 
 <mat-dialog-content>
-
+    <form [formGroup]="addDeviceForm" novalidate>
+        <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Thermometer" formControlName="name">
+        </mat-form-field>
+    
+        <mat-form-field class="full-width">
+            <mat-label>Schema</mat-label>
+            <input matInput formControlName="schema">
+        </mat-form-field>
+    </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Add</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->

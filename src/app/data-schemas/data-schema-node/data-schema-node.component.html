@@ -1,0 +1,22 @@
+<mat-accordion multi>
+    <mat-expansion-panel *ngFor="let child of node.schema">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{child.name}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="data-list" style="margin-bottom: 16px;">
+            <div class="data-list-label">Key:</div><div>{{child.key}}</div>
+            <div class="data-list-label">Unit:</div><div>{{child.unit}}</div>
+        </div>
+
+        <app-data-schema-node [node]="child" [readOnly]="addOnly || readOnly" (addNode)="passEvent($event)"></app-data-schema-node>
+
+        <mat-action-row *ngIf="!readOnly">
+            <button mat-button *ngIf="!addOnly" color="primary" (click)="addSchema(child)">Add</button>
+            <button mat-button *ngIf="!addOnly" color="primary">Edit</button>
+            <button mat-button color="primary">Delete</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

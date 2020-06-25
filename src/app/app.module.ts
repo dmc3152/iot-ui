@@ -9,6 +9,9 @@ import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { DevicesModule } from './devices/devices.module';
 import { ChartsModule } from './charts/charts.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
+import { DataSchemasModule } from './data-schemas/data-schemas.module';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,14 @@ import { ChartsModule } from './charts/charts.module';
     SharedModule,
     AuthenticationModule,
     DevicesModule,
+    DataSchemasModule,
     ChartsModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

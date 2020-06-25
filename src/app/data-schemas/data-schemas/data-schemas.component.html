@@ -1,5 +1,5 @@
 <div class="grid">
-    <app-device *ngFor="let device of devices" [name]="device.name" [status]="device.status" [routerLink]="[device.id]"></app-device>
+    <app-data-schema *ngFor="let schema of dataSchemas" [name]="schema.name" [routerLink]="[schema.id]"></app-data-schema>
 </div>
 
 <a mat-fab color="primary" class="add-button" routerLink="./add">

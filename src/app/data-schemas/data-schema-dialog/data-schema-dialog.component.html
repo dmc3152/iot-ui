@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>New Data Schema</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="addSchemaForm" novalidate>
+        <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Temperature" formControlName="name" required>
+        </mat-form-field>
+    
+        <mat-form-field class="full-width">
+            <mat-label>Key</mat-label>
+            <input matInput placeholder="degrees" formControlName="key" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Unit</mat-label>
+            <input matInput placeholder="F" formControlName="unit">
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="addSchemaForm.value" [disabled]="addSchemaForm.invalid">Add</button>
+</mat-dialog-actions>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDeviceComponent } from '../add-device/add-device.component';
+import { DeviceService } from '../device.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-devices',
@@ -10,15 +12,29 @@ import { AddDeviceComponent } from '../add-device/add-device.component';
 export class DevicesComponent implements OnInit {
   devices: Array<any> = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    private deviceService: DeviceService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    for(let i = 0; i < 8; i++) {
-      this.devices.push({
-        name: 'Device ' + (i + 1),
-        status: 'Connected'
+    // for(let i = 0; i < 8; i++) {
+    //   this.devices.push({
+    //     name: 'Device ' + (i + 1),
+    //     status: 'Connected'
+    //   });
+    // }
+
+    this.deviceService.getDevices()
+      .pipe(take(1))
+      .subscribe(devices => {
+        this.devices = devices;
+        console.log(devices);
       });
-    }
+
+    // this.deviceService.getDeviceById('22:0')
+    //   .pipe(take(1))
+    //   .subscribe(device => console.log(device));
   }
 
   addDevice() {
