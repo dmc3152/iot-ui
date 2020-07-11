@@ -1,0 +1,17 @@
+{
+  "hosting": [
+    {
+      "app": {
+        "project": "iot-ui",
+        "target": "build",
+        "configuration": "production",
+        "path": "dist/iot-ui"
+      },
+      "azureHosting": {
+        "subscription": "ef5d15a3-a0af-45a7-80eb-862c196e4aae",
+        "resourceGroupName": "vso-rg-2e8af2d",
+        "account": "iotsummerpracticum"
+      }
+    }
+  ]
+}

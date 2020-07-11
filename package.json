@@ -4,13 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:local": "ng serve --proxy-config proxy.local.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
-  "proxy": "http://localhost:3000",
   "dependencies": {
     "@angular/animations": "^9.1.11",
     "@angular/cdk": "^9.2.4",
@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "@azure/ng-deploy": "^0.2.3",
     "chart.js": "^2.9.3",
     "moment": "^2.26.0",
     "ng2-charts": "^2.3.2",

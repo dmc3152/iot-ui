@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataSchema } from '../shared/models/data-schema';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataSchemaService {
-  private baseUrl = 'http://localhost:3000/api/schema/';
+  private baseUrl = `${environment.apiUrl}/schema/`;
 
   constructor(private http: HttpClient) { }
 

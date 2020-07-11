@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/models/user';
 import * as moment from 'moment';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseUrl = 'http://localhost:3000/api/auth/';
+  private baseUrl = `http://localhost:3000${environment.apiUrl}/auth/`;
   private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public redirectUrl: string;
 
