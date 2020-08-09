@@ -23,4 +23,13 @@ export class DataSchemaService {
   addDataSchema(schema: any): Observable<any> {
     return this.http.post<any>(this.baseUrl, schema);
   }
+
+  updateDataSchema(schema: DataSchema): Observable<DataSchema> {
+    return this.http.put<any>(this.baseUrl, schema);
+  }
+
+  deleteDataSchema(id: string): Observable<any> {
+    const url = this.baseUrl + id;
+    return this.http.delete<any>(url);
+  }
 }

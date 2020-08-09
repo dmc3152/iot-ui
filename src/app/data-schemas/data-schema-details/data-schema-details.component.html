@@ -6,17 +6,19 @@
 
     <mat-card class="schema-card">
         <mat-card-content>
-            <div class="data-list" style="margin-bottom: 16px;">
+            <app-data-schema-tree [dataSchema]="dataSchema" (updateNode)="updateNode($event)" (deleteSchema)="deleteSchema()"></app-data-schema-tree>
+
+            <!-- <div class="data-list" style="margin-bottom: 16px;">
                 <div class="data-list-label">Key:</div><div>{{dataSchema.key}}</div>
                 <div class="data-list-label">Unit:</div><div>{{dataSchema.unit}}</div>
             </div>
 
-            <app-data-schema-node [node]="dataSchema" (addNode)="addNode($event)"></app-data-schema-node>
+            <app-data-schema-node [node]="dataSchema" (addNode)="addNode($event)"></app-data-schema-node> -->
         </mat-card-content>
 
-        <mat-card-actions align="end">
+        <!-- <mat-card-actions align="end">
             <button mat-button>Edit</button>
             <button mat-button>Delete</button>
-        </mat-card-actions>
+        </mat-card-actions> -->
     </mat-card>
 </div>

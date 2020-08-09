@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataSchemaService } from '../data-schema.service';
 import { take } from 'rxjs/operators';
 import { DataSchema } from 'src/app/shared/models/data-schema';
@@ -10,10 +10,11 @@ import { DataSchema } from 'src/app/shared/models/data-schema';
   styleUrls: ['./data-schema-details.component.less']
 })
 export class DataSchemaDetailsComponent implements OnInit {
-  dataSchema: any = {};
+  dataSchema: DataSchema = new DataSchema();
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataSchemaService: DataSchemaService
   ) { }
 
@@ -27,8 +28,18 @@ export class DataSchemaDetailsComponent implements OnInit {
       });
   }
 
-  addNode(data) {
+  updateNode(data) {
+    this.dataSchema = data;
+  }
 
+  deleteSchema() {
+    this.dataSchemaService.deleteDataSchema(this.dataSchema.id)
+      .pipe(take(1))
+      .subscribe( success => {
+        if (success) {
+          this.router.navigate(['dataSchemas']);
+        }
+      });
   }
 
 }

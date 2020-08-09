@@ -14,6 +14,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatSelectModule } from "@angular/material/select";
+import { MatTreeModule } from "@angular/material/tree";
 
 @NgModule({
   declarations: [],
@@ -32,7 +33,8 @@ import { MatSelectModule } from "@angular/material/select";
     MatGridListModule,
     MatDialogModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTreeModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -48,7 +50,8 @@ import { MatSelectModule } from "@angular/material/select";
     MatGridListModule,
     MatDialogModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTreeModule
   ]
 })
 export class SharedModule { }

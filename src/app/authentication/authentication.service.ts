@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseUrl = `http://localhost:3000${environment.apiUrl}/auth/`;
+  private baseUrl = `${environment.apiUrl}/auth/`;
   private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public redirectUrl: string;
 

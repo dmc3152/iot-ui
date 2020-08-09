@@ -9,11 +9,12 @@ import { DataSchemaNodeComponent } from './data-schema-node/data-schema-node.com
 import { DataSchemaDialogComponent } from './data-schema-dialog/data-schema-dialog.component';
 import { DataSchemaDetailsComponent } from './data-schema-details/data-schema-details.component';
 import { ChooseDataSchemaDialogComponent } from './choose-data-schema-dialog/choose-data-schema-dialog.component';
+import { DataSchemaTreeComponent } from './data-schema-tree/data-schema-tree.component';
 
 
 
 @NgModule({
-  declarations: [DataSchemaComponent, DataSchemasComponent, AddDataSchemaComponent, DataSchemaNodeComponent, DataSchemaDialogComponent, DataSchemaDetailsComponent, ChooseDataSchemaDialogComponent],
+  declarations: [DataSchemaComponent, DataSchemasComponent, AddDataSchemaComponent, DataSchemaNodeComponent, DataSchemaDialogComponent, DataSchemaDetailsComponent, ChooseDataSchemaDialogComponent, DataSchemaTreeComponent],
   imports: [
     CommonModule,
     SharedModule,
