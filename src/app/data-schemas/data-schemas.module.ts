@@ -20,6 +20,6 @@ import { DataSchemaTreeComponent } from './data-schema-tree/data-schema-tree.com
     SharedModule,
     DataSchemasRoutingModule
   ],
-  exports: [DataSchemaNodeComponent]
+  exports: [DataSchemaNodeComponent, DataSchemaTreeComponent]
 })
 export class DataSchemasModule { }

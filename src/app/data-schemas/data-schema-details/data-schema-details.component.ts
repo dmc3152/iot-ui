@@ -32,8 +32,8 @@ export class DataSchemaDetailsComponent implements OnInit {
     this.dataSchema = data;
   }
 
-  deleteSchema() {
-    this.dataSchemaService.deleteDataSchema(this.dataSchema.id)
+  deleteSchema(id) {
+    this.dataSchemaService.deleteDataSchema(id)
       .pipe(take(1))
       .subscribe( success => {
         if (success) {

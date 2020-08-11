@@ -6,7 +6,7 @@
 
     <mat-card class="schema-card">
         <mat-card-content>
-            <app-data-schema-tree [dataSchema]="dataSchema" (updateNode)="updateNode($event)" (deleteSchema)="deleteSchema()"></app-data-schema-tree>
+            <app-data-schema-tree [dataSchema]="[dataSchema]" (updateNode)="updateNode($event)" (deleteSchema)="deleteSchema($event)"></app-data-schema-tree>
 
             <!-- <div class="data-list" style="margin-bottom: 16px;">
                 <div class="data-list-label">Key:</div><div>{{dataSchema.key}}</div>

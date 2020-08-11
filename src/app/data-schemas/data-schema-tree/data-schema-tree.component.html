@@ -16,7 +16,7 @@
                             <mat-icon>add</mat-icon>
                             <span>Add Child</span>
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="editSchema(node)">
                             <mat-icon>edit</mat-icon>
                             <span>Edit</span>
                         </button>
@@ -26,7 +26,7 @@
                         </button>
                     </mat-menu>
                     <button class="hidden-sm" mat-icon-button (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
-                    <button class="hidden-sm" mat-icon-button><mat-icon>edit</mat-icon></button>
+                    <button class="hidden-sm" mat-icon-button (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
                     <button class="hidden-sm" mat-icon-button (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                                 <mat-icon>add</mat-icon>
                                 <span>Add Child</span>
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="editSchema(node)">
                                 <mat-icon>edit</mat-icon>
                                 <span>Edit</span>
                             </button>
@@ -65,7 +65,7 @@
                             </button>
                         </mat-menu>
                         <button class="hidden-sm" mat-icon-button (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
-                        <button class="hidden-sm" mat-icon-button><mat-icon>edit</mat-icon></button>
+                        <button class="hidden-sm" mat-icon-button (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
                         <button class="hidden-sm" mat-icon-button (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./data-schema-tree.component.less']
 })
 export class DataSchemaTreeComponent implements OnInit, OnChanges {
-  @Input() dataSchema: DataSchema;
+  @Input() dataSchema: Array<DataSchema>;
   @Output() updateNode = new EventEmitter<any>();
   @Output() deleteSchema = new EventEmitter<any>();
 
@@ -31,7 +31,7 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.dataSchema) {
-      this.nestedDataSource.data = [changes.dataSchema.currentValue];
+      this.nestedDataSource.data = changes.dataSchema.currentValue;
     }
   }
 
@@ -48,7 +48,6 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
   };
 
   addSchema(node) {
-    const isRootNode = node.id === this.dataSchema.id;
     const dialogRef = this.dialog.open(DataSchemaDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -57,15 +56,31 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
       result.schema = [];
       node.schema.push(result);
 
-      this.updateSchema();
+      const rootNode = this.findRootNode(node, this.dataSchema, null);
+      this.updateSchema(rootNode);
+    });
+  }
+
+  editSchema(node) {
+    const dialogRef = this.dialog.open(DataSchemaDialogComponent, { data: node });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+      
+      node.name = result.name;
+      node.key = result.key;
+      node.unit = result.unit;
+
+      const rootNode = this.findRootNode(node, this.dataSchema, null);
+      this.updateSchema(rootNode);
     });
   }
 
   removeNode(node) {
-    const isRootNode = node.id === this.dataSchema.id;
+    const isRootNode = this.dataSchema.some(schema => schema.id === node.id);
 
     if (isRootNode) {
-      this.deleteSchema.emit();
+      this.deleteSchema.emit(node.id);
       return;
     }
 
@@ -76,17 +91,19 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
     if (nodeIndex === -1) return;
 
     parent.schema.splice(nodeIndex, 1);
-    this.updateSchema();
+
+    const rootNode = this.findRootNode(node, this.dataSchema, null);
+    this.updateSchema(rootNode);
   }
 
   private findParent(node, schema) {
-    if (!Array.isArray(schema.schema)) return false;
+    if (!Array.isArray(schema)) return false;
 
-    for (let i in schema.schema) {
-      if (schema.schema[i].id === node.id) {
+    for (let i in schema) {
+      if (schema[i].id === node.id) {
         return schema;
       } else {
-        const parent = this.findParent(node, schema.schema[i]);
+        const parent = this.findParent(node, schema[i].schema);
         if (parent) return parent;
       }
     }
@@ -94,16 +111,32 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
     return false;
   }
 
-  private updateSchema() {
+  private findRootNode(node, schema, rootNode) {
+    if (!Array.isArray(schema)) return false;
+
+    for (let i in schema) {
+      if (schema[i].id === node.id) {
+        return rootNode ? rootNode : schema[i];
+      } else {
+        const tempRoot = rootNode ? rootNode : schema[i];
+        const root = this.findRootNode(node, schema[i].schema, tempRoot);
+        if (root) return root;
+      }
+    }
+
+    return false;
+  }
+
+  private updateSchema(rootNode) {
     this.dataSchemaService
-      .updateDataSchema(this.nestedDataSource.data.shift())
+      .updateDataSchema(rootNode)
       .pipe(take(1))
       .subscribe(
         dataSchema => {
           this.updateNode.emit(dataSchema);
         },
         err => {
-          console.log('error', err);
+          console.error(err);
         }
       );
   }

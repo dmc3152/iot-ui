@@ -8,13 +8,12 @@
         <h2>Data Schema</h2>
 
         <mat-card-content>
-            <app-data-schema-node [node]="device" (addNode)="addNode($event)"></app-data-schema-node>
+            <app-data-schema-tree [dataSchema]="device.schema" (updateNode)="updateNode($event)" (deleteSchema)="deleteSchema($event)"></app-data-schema-tree>
+            <!-- <app-data-schema-node [node]="device" (addNode)="addNode($event)"></app-data-schema-node> -->
         </mat-card-content>
 
         <mat-card-actions align="end">
             <button mat-button>Add</button>
-            <button mat-button>Edit</button>
-            <button mat-button>Delete</button>
         </mat-card-actions>
     </mat-card>
 </div>
