@@ -27,7 +27,8 @@
                 <mat-panel-title>Data Schema</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <app-data-schema-node [node]="device" [addOnly]="true"></app-data-schema-node>
+            <!-- <app-data-schema-node [node]="device" [addOnly]="true"></app-data-schema-node> -->
+            <app-data-schema-tree [dataSchema]="device.schema" (updateNode)="updateNode($event)" (deleteSchema)="deleteSchema($event)"></app-data-schema-tree>
 
             <mat-action-row style="justify-content: space-between; padding-left: 8px;">
                 <div>

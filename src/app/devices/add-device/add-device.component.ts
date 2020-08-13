@@ -58,9 +58,16 @@ export class AddDeviceComponent implements OnInit {
       if (!result) return;
       
       console.log(result)
-      this.device.schema.push(result.chosenSchema);
+      this.device.schema = [result.chosenSchema, ...this.device.schema];
+      this.device.schema.sort(this.sortByName);
     });
   }
+
+  private sortByName = (a, b) => {
+    const x = a.name.toLowerCase();
+    const y = b.name.toLowerCase();
+    return x < y ? -1 : (x > y ? 1 : 0);
+  };
 
   save(form) {
     if (form.invalid) return;

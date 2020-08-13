@@ -4,7 +4,7 @@
         <a mat-icon-button routerLink=".."><mat-icon>close</mat-icon></a>
     </h2>
 
-    <mat-accordion>
+    <!-- <mat-accordion>
         <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>Information</mat-panel-title>
@@ -49,19 +49,31 @@
                 </div>
             </mat-action-row>
         </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
 
-    <!-- <mat-card style="margin-top: 8px;">
-        <mat-card-header>
-            <mat-card-title>Data Schema</mat-card-title>
-        </mat-card-header>
+    <mat-card style="margin-top: 8px;">
         <mat-card-content class="wrapper">
-            <app-data-schema-node [node]="device" (addNode)="addNode($event)"></app-data-schema-node>
+            <form [formGroup]="schemaInfoForm" novalidate>
+                <mat-form-field class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Temperature" formControlName="name" required>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Key</mat-label>
+                    <input matInput placeholder="degrees" formControlName="key" required>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Unit</mat-label>
+                    <input matInput placeholder="F" formControlName="unit">
+                </mat-form-field>
+            </form>
         </mat-card-content>
         <mat-card-actions class="align-right">
-            <a mat-button (click)="addSchema(device)">Add</a>
+            <!-- <a mat-button (click)="addSchema(device)">Add</a> -->
             <a mat-button routerLink="..">Cancel</a>
-            <a mat-button>Save</a>
+            <a mat-button (click)="save(schemaInfoForm)">Save</a>
         </mat-card-actions>
-    </mat-card> -->
+    </mat-card>
 </div>
