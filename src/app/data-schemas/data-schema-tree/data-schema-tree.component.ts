@@ -15,6 +15,7 @@ import { take } from 'rxjs/operators';
 })
 export class DataSchemaTreeComponent implements OnInit, OnChanges {
   @Input() dataSchema: Array<DataSchema>;
+  @Input() mode: string;
   @Output() updateNode = new EventEmitter<any>();
   @Output() deleteSchema = new EventEmitter<any>();
 

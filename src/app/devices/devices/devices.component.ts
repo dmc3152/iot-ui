@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDeviceComponent } from '../add-device/add-device.component';
 import { DeviceService } from '../device.service';
 import { take } from 'rxjs/operators';
+import { Device } from 'src/app/shared/models/device';
 
 @Component({
   selector: 'app-devices',
@@ -28,8 +29,7 @@ export class DevicesComponent implements OnInit {
     this.deviceService.getDevices()
       .pipe(take(1))
       .subscribe(devices => {
-        this.devices = devices;
-        console.log(devices);
+        this.devices = devices.map(device => new Device(device));
       });
 
     // this.deviceService.getDeviceById('22:0')

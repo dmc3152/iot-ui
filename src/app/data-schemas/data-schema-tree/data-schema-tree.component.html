@@ -12,22 +12,22 @@
                 <div>
                     <button class="visible-sm" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="addSchema(node)">
+                        <button mat-menu-item (click)="addSchema(node)" *ngIf="mode !== 'addOnly'">
                             <mat-icon>add</mat-icon>
                             <span>Add Child</span>
                         </button>
-                        <button mat-menu-item (click)="editSchema(node)">
+                        <button mat-menu-item (click)="editSchema(node)" *ngIf="mode !== 'addOnly'">
                             <mat-icon>edit</mat-icon>
                             <span>Edit</span>
                         </button>
-                        <button mat-menu-item (click)="removeNode(node)">
+                        <button mat-menu-item (click)="removeNode(node)" *ngIf="!(mode === 'addOnly' && node.level > 0)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>
                     </mat-menu>
-                    <button class="hidden-sm" mat-icon-button (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
-                    <button class="hidden-sm" mat-icon-button (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
-                    <button class="hidden-sm" mat-icon-button (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
+                    <button class="hidden-sm" *ngIf="mode !== 'addOnly'" mat-icon-button (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
+                    <button class="hidden-sm" *ngIf="mode !== 'addOnly'" mat-icon-button (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
+                    <button class="hidden-sm" *ngIf="!(mode === 'addOnly' && node.level > 0)" mat-icon-button (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
                 </div>
             </div>
         </li>
@@ -51,22 +51,22 @@
                     <div>
                         <button class="visible-sm" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="addSchema(node)">
+                            <button mat-menu-item (click)="addSchema(node)" *ngIf="mode !== 'addOnly'">
                                 <mat-icon>add</mat-icon>
                                 <span>Add Child</span>
                             </button>
-                            <button mat-menu-item (click)="editSchema(node)">
+                            <button mat-menu-item (click)="editSchema(node)" *ngIf="mode !== 'addOnly'">
                                 <mat-icon>edit</mat-icon>
                                 <span>Edit</span>
                             </button>
-                            <button mat-menu-item (click)="removeNode(node)">
+                            <button mat-menu-item (click)="removeNode(node)" *ngIf="!(mode === 'addOnly' && node.level > 0)">
                                 <mat-icon>delete</mat-icon>
                                 <span>Delete</span>
                             </button>
                         </mat-menu>
-                        <button class="hidden-sm" mat-icon-button (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
-                        <button class="hidden-sm" mat-icon-button (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
-                        <button class="hidden-sm" mat-icon-button (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
+                        <button class="hidden-sm" mat-icon-button *ngIf="mode !== 'addOnly'" (click)="addSchema(node)"><mat-icon>add</mat-icon></button>
+                        <button class="hidden-sm" mat-icon-button *ngIf="mode !== 'addOnly'" (click)="editSchema(node)"><mat-icon>edit</mat-icon></button>
+                        <button class="hidden-sm" mat-icon-button *ngIf="!(mode === 'addOnly' && node.level > 0)" (click)="removeNode(node)"><mat-icon>delete</mat-icon></button>
                     </div>
                 </div>
             </div>

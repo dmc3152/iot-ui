@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataSchemaService } from '../data-schema.service';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { DataSchema } from 'src/app/shared/models/data-schema';
 
 @Component({
   selector: 'app-data-schemas',
@@ -20,8 +21,7 @@ export class DataSchemasComponent implements OnInit {
     this.dataSchemaService.getDataSchemas()
       .pipe(take(1))
       .subscribe(dataSchemas => {
-        this.dataSchemas = dataSchemas;
-        console.log(dataSchemas);
+        this.dataSchemas = dataSchemas.map(schema => new DataSchema(schema));
       });
   }
 

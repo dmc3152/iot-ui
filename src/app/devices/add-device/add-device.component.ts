@@ -51,13 +51,16 @@ export class AddDeviceComponent implements OnInit {
     console.log('top', this.device);
   }
 
+  deleteSchema(id) {
+    this.device.schema = this.device.schema.filter(schema => schema.id !== id);
+  }
+
   addSchema() {
-    const dialogRef = this.dialog.open(ChooseDataSchemaDialogComponent);
+    const dialogRef = this.dialog.open(ChooseDataSchemaDialogComponent, { data: this.device.schema.map(schema => schema.id) });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
       
-      console.log(result)
       this.device.schema = [result.chosenSchema, ...this.device.schema];
       this.device.schema.sort(this.sortByName);
     });
@@ -81,7 +84,6 @@ export class AddDeviceComponent implements OnInit {
     //   })
     // };
 
-    console.log(this.device);
     this.deviceService.addDevice(this.device)
       .pipe(take(1))
       .subscribe(

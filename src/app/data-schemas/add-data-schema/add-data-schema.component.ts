@@ -71,7 +71,6 @@ export class AddDataSchemaComponent implements OnInit {
     this.schema.key = form.value.key;
     this.schema.unit = form.value.unit;
 
-    console.log(this.schema);
     this.dataSchemaService.addDataSchema(this.schema)
       .pipe(take(1))
       .subscribe(

@@ -23,8 +23,7 @@ export class DataSchemaDetailsComponent implements OnInit {
     this.dataSchemaService.getDataSchemaById(id)
       .pipe(take(1))
       .subscribe( dataSchema => {
-        this.dataSchema = dataSchema;
-        console.log(this.dataSchema);
+        this.dataSchema = new DataSchema(dataSchema);
       });
   }
 

@@ -28,7 +28,7 @@ export class DataSchemaNodeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
-      console.log(result);
+      
       result.schema = [];
       node.schema.push(result);
     });
