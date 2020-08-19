@@ -19,7 +19,6 @@ import { DataPath } from 'src/app/shared/models/data-path';
 })
 export class ChartsComponent implements OnInit {
   chartDataSources: ChartDataSets[] = [];
-  chartLabels: Label[] = [];
   chartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -69,10 +68,16 @@ export class ChartsComponent implements OnInit {
     }, {});
 
     this.reportForm.get('selectedDevice').valueChanges.subscribe(value => {
+      const selectedSchema: FormArray = this.reportForm.get('selectedSchema') as FormArray;
+      selectedSchema.controls = [];
+      this.selectedUnit = null;
+      this.dataPaths = {};
+      this.showChart = false;
+      this.prepareData();
+
       this.deviceService.getDeviceById(value.id)
       .pipe(take(1))
       .subscribe(device => {
-        console.log('device', device);
         this.selectedDevice = device;
         this.nestedDataSource.data = device.schema;
       });
@@ -102,7 +107,6 @@ export class ChartsComponent implements OnInit {
           path: foundPath.path,
           schema: e.source.value
         };
-        this.prepareData();
         this.showChart = true;
       }
     } else {
@@ -118,8 +122,10 @@ export class ChartsComponent implements OnInit {
         this.showChart = false;
       }
       
-      this.dataPaths[e.source.value.id] = undefined;
+      delete this.dataPaths[e.source.value.id];
     }
+    
+    this.prepareData();
   }
 
   private extractPathFromSchema(node: DataSchema, dataSchema: Array<DataSchema>, currentPath: Array<string>) {
@@ -156,22 +162,15 @@ export class ChartsComponent implements OnInit {
 
   private prepareData() {
     this.chartDataSources = [];
-    // let min = null;
-    // let max = null;
+    if (!Object.keys(this.dataPaths).length) return;
+
     Object.values(this.dataPaths).forEach(node => {
       const { schema, path } = node as DataPath;
-      console.log(path);
       const data = this.selectedDevice.data.map(record => {
         let value: any = record;
         for (let i = 0; i < path.length; i++) {
           value = value[path[i]];
         }
-
-        // if (min === null || value < min)
-        //   min = value;
-          
-        // if (max === null || value > max)
-        //   max = value;
 
         return {
           y: value,
@@ -179,20 +178,10 @@ export class ChartsComponent implements OnInit {
         };
       });
 
-      // const range = max - min;
-      // const interval = range / 7;
-
-      // this.chartLabels = [];
-      // for(let i = 0; i < 8; i++) {
-      //   this.chartLabels.push(min + interval * i);
-      // }
-
       this.chartDataSources.push({
         data: data,
         label: schema.name
       });
-
-      console.log(this.chartDataSources);
     });
   }
 
