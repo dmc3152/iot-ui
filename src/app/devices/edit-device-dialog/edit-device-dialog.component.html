@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Edit Device</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="editDeviceForm" novalidate>
+        <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Thermometer" formControlName="name" required>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="editDeviceForm.value" [disabled]="editDeviceForm.invalid">Save</button>
+</mat-dialog-actions>

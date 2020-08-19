@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         user => {
           this.userService.setUser(user);
-          this.router.navigate(['/devices']);
+          this.router.navigate(['/dataSchemas']);
         },
         error => {
           this.snackBar.open('Your email or password is incorrect. Please try again.', null, { duration: 5000 });

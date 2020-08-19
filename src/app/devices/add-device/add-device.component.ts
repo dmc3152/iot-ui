@@ -87,7 +87,7 @@ export class AddDeviceComponent implements OnInit {
     this.deviceService.addDevice(this.device)
       .pipe(take(1))
       .subscribe(
-        result => { this.router.navigate(['..']); },
+        result => { this.router.navigate(['devices']); },
         err => { console.error(err); }
       );
   }

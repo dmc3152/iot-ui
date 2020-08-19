@@ -19,6 +19,7 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
   @Output() updateNode = new EventEmitter<any>();
   @Output() deleteSchema = new EventEmitter<any>();
 
+  dataTypeLookup: any;
   nestedTreeControl: NestedTreeControl<DataSchema>
   nestedDataSource: MatTreeNestedDataSource<DataSchema>;
 
@@ -31,13 +32,16 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.dataSchema) {
+    if (changes.dataSchema) {
       this.nestedDataSource.data = changes.dataSchema.currentValue;
     }
   }
 
   ngOnInit(): void {
-    
+    this.dataTypeLookup = this.dataSchemaService.getDataTypes().reduce((lookup, option) => {
+      lookup[option.value] = option.text;
+      return lookup;
+    }, {});
   }
 
   private _getChildren = (node: DataSchema) => {
@@ -57,7 +61,7 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
       result.schema = [];
       node.schema.push(result);
 
-      const rootNode = this.findRootNode(node, this.dataSchema, null);
+      const rootNode = this.findRootNode(node);
       this.updateSchema(rootNode);
     });
   }
@@ -71,8 +75,9 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
       node.name = result.name;
       node.key = result.key;
       node.unit = result.unit;
+      node.type = result.type;
 
-      const rootNode = this.findRootNode(node, this.dataSchema, null);
+      const rootNode = this.findRootNode(node);
       this.updateSchema(rootNode);
     });
   }
@@ -85,26 +90,27 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
       return;
     }
 
-    const parent = this.findParent(node, this.dataSchema);
-    if (!parent) return;
+    const rootNode = this.findRootNode(node);
+    if (!rootNode) return;
 
-    const nodeIndex = parent.schema.findIndex(schema => schema.id === node.id);
+    const parentSchema = this.findParentSchema(node, this.dataSchema);
+    if (!parentSchema) return;
+
+    const nodeIndex = parentSchema.findIndex(schema => schema.id === node.id);
     if (nodeIndex === -1) return;
 
-    parent.schema.splice(nodeIndex, 1);
-
-    const rootNode = this.findRootNode(node, this.dataSchema, null);
+    parentSchema.splice(nodeIndex, 1);
     this.updateSchema(rootNode);
   }
 
-  private findParent(node, schema) {
+  private findParentSchema(node, schema) {
     if (!Array.isArray(schema)) return false;
 
     for (let i in schema) {
       if (schema[i].id === node.id) {
         return schema;
       } else {
-        const parent = this.findParent(node, schema[i].schema);
+        const parent = this.findParentSchema(node, schema[i].schema);
         if (parent) return parent;
       }
     }
@@ -112,20 +118,19 @@ export class DataSchemaTreeComponent implements OnInit, OnChanges {
     return false;
   }
 
-  private findRootNode(node, schema, rootNode) {
-    if (!Array.isArray(schema)) return false;
+  private findRootNode(node) {
+    return this.dataSchema.find(schemaNode => {
+      return this.findNode(schemaNode, node);
+    });
+  }
 
-    for (let i in schema) {
-      if (schema[i].id === node.id) {
-        return rootNode ? rootNode : schema[i];
-      } else {
-        const tempRoot = rootNode ? rootNode : schema[i];
-        const root = this.findRootNode(node, schema[i].schema, tempRoot);
-        if (root) return root;
-      }
-    }
+  private findNode(node, nodeToFind) {
+    if (node.id === nodeToFind.id) return true;
+    if (!Array.isArray(node.schema) || !node.schema.length) return false;
 
-    return false;
+    return node.schema.some(schemaNode => {
+      return this.findNode(schemaNode, nodeToFind);
+    });
   }
 
   private updateSchema(rootNode) {

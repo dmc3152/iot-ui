@@ -1,5 +1,70 @@
-<div class="grid">
-    <app-line-chart></app-line-chart>
-    <app-line-chart></app-line-chart>
-    <app-line-chart></app-line-chart>
+<div class="container">
+    <mat-card>
+        <h2>Reporting</h2>
+
+        <mat-card-content>
+            <form [formGroup]="reportForm" novalidate>
+                <mat-form-field class="half-width">
+                    <mat-label>Device</mat-label>
+                    <mat-select name="selectedDevice" formControlName="selectedDevice" required>
+                        <mat-option *ngFor="let device of devices" [value]="device">
+                            {{device.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="example-tree">
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                        <li class="mat-tree-node">
+                            <button mat-icon-button disabled></button>
+                            <div style="width: 100%; display: flex; align-items: center; margin-left: 5px;">
+                                <mat-checkbox *ngIf="canSelectSchema(node)" [value]="node" (change)="onCheckboxChange($event)"></mat-checkbox>
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <div style="font-size: 10px; line-height: 10px; color: #888">{{node.name}}</div>
+                                    <div>
+                                        {{node.key}}<span *ngIf="node.unit">: {{node.unit}}</span><span *ngIf="node.type"> ({{dataTypeLookup[node.type]}})</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </mat-tree-node>
+
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+                        <li>
+                            <div class="mat-tree-node">
+                                <button mat-icon-button matTreeNodeToggle>
+                                    <mat-icon class="mat-icon-rtl-mirror">
+                                        {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                    </mat-icon>
+                                </button>
+                                <div style="width: 100%; display: flex; align-items: center; margin-left: 5px;">
+                                    <mat-checkbox *ngIf="canSelectSchema(node)" [value]="node" (change)="onCheckboxChange($event)"></mat-checkbox>
+                                    <div style="flex: 1; display: flex; flex-direction: column;">
+                                        <div style="font-size: 10px; line-height: 10px; color: #888">{{node.name}}</div>
+                                        <div>
+                                            {{node.key}}<span *ngIf="node.unit">: {{node.unit}}</span><span *ngIf="node.type"> ({{dataTypeLookup[node.type]}})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                                <ng-container matTreeNodeOutlet></ng-container>
+                            </ul>
+                        </li>
+                    </mat-nested-tree-node>
+                </mat-tree>
+                <!-- Data Schema Tree with select - only numbers can be selected -->
+            </form>
+        </mat-card-content>
+
+        <!-- <mat-card-actions align="end">
+            <button mat-button color="primary" (click)="editInfo()">Edit</button>
+        </mat-card-actions> -->
+    </mat-card>
+
+    <mat-card *ngIf="showChart">
+        <mat-card-content>
+            <app-line-chart [lineChartData]="chartDataSources" [lineChartOptions]="chartOptions"></app-line-chart>
+        </mat-card-content>
+    </mat-card>
 </div>

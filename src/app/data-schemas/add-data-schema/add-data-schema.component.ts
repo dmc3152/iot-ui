@@ -6,6 +6,7 @@ import { DataSchemaService } from '../data-schema.service';
 import { DataSchema } from 'src/app/shared/models/data-schema';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { DataOption } from 'src/app/shared/models/data-option';
 
 @Component({
   selector: 'app-add-data-schema',
@@ -13,15 +14,18 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./add-data-schema.component.less']
 })
 export class AddDataSchemaComponent implements OnInit {
+  dataTypes: Array<DataOption> = this.dataSchemaService.getDataTypes();
   schemaInfoForm = new FormGroup({          
     name: new FormControl(null, Validators.required),
     key: new FormControl(null, Validators.required),
-    unit: new FormControl(null)
+    unit: new FormControl(null),
+    type: new FormControl(null)
   });
   schema = {
     name: '',
     key: '',
     unit: '',
+    type: '',
     schema: []
   };
   step: number = 0;
@@ -70,6 +74,7 @@ export class AddDataSchemaComponent implements OnInit {
     this.schema.name = form.value.name;
     this.schema.key = form.value.key;
     this.schema.unit = form.value.unit;
+    this.schema.type = form.value.type;
 
     this.dataSchemaService.addDataSchema(this.schema)
       .pipe(take(1))

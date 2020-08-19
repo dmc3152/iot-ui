@@ -16,6 +16,15 @@
             <mat-label>Unit</mat-label>
             <input matInput placeholder="F" formControlName="unit">
         </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let type of dataTypes" [value]="type.value">
+                    {{type.text}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </form>
 </mat-dialog-content>
 

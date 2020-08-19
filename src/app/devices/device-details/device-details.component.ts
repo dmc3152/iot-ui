@@ -6,6 +6,8 @@ import { DataSchemaService } from 'src/app/data-schemas/data-schema.service';
 import { Device } from 'src/app/shared/models/device';
 import { MatDialog } from '@angular/material/dialog';
 import { ChooseDataSchemaDialogComponent } from 'src/app/data-schemas/choose-data-schema-dialog/choose-data-schema-dialog.component';
+import { EditDeviceDialogComponent } from '../edit-device-dialog/edit-device-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-device-details',
@@ -18,7 +20,7 @@ export class DeviceDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private deviceService: DeviceService,
-    private dataSchemaService: DataSchemaService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) { }
 
@@ -28,6 +30,7 @@ export class DeviceDetailsComponent implements OnInit {
       .pipe(take(1))
       .subscribe( device => {
         this.device = new Device(device);
+        this.device.schema.sort(this.sortByName);
       });
   }
 
@@ -39,6 +42,7 @@ export class DeviceDetailsComponent implements OnInit {
       
       this.device.schema = [result.chosenSchema, ...this.device.schema];
       this.device.schema.sort(this.sortByName);
+      this.save();
     });
   }
 
@@ -48,30 +52,33 @@ export class DeviceDetailsComponent implements OnInit {
     return x < y ? -1 : (x > y ? 1 : 0);
   };
 
-  save() {
-    // this.deviceService.updateDevice(this.device)
-    //   .pipe(take(1))
-    //   .subscribe(
-    //     result => { },
-    //     err => { console.error(err); }
-    //   );
+  editInfo() {
+    const dialogRef = this.dialog.open(EditDeviceDialogComponent, { data: this.device });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+      
+      this.device.name = result.name;
+      this.save();
+    });
   }
 
-  updateNode(data) {
-    let node = this.device.schema.find(node => { node.id === data.id; });
-    
-    if (node)
-      node = data;
+  save() {
+    this.deviceService.updateDevice(this.device)
+      .pipe(take(1))
+      .subscribe(
+        result => {
+          this.snackBar.open('Device was updated successfully!', null, {
+            duration: 3000,
+          });
+        },
+        err => { console.error(err); }
+      );
   }
 
   deleteSchema(id) {
-    this.dataSchemaService.deleteDataSchema(id)
-      .pipe(take(1))
-      .subscribe( success => {
-        const index = this.device.schema.findIndex(node => { node.id === id; });
-        if (index !== -1)
-          this.device.schema.splice(index, 1);
-      });
+    this.device.schema = this.device.schema.filter(node => node.id !== id);
+    this.save();
   }
 
 }

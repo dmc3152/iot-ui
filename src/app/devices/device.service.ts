@@ -23,4 +23,8 @@ export class DeviceService {
   addDevice(device: any): Observable<any> {
     return this.http.post<any>(this.baseUrl, device);
   }
+
+  updateDevice(device: Device): Observable<Device> {
+    return this.http.put<Device>(this.baseUrl, device);
+  }
 }

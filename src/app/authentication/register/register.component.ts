@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
         user => {
           this.displayMessage('You have been registered successfully!');
           this.userService.setUser(user);
-          this.router.navigate(['/devices']);
+          this.router.navigate(['/dataSchemas']);
         },
         error => {
           this.displayMessage('The supplied email is already in use. Please login or choose a different email.');

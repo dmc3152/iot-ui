@@ -8,10 +8,11 @@ import { DeviceComponent } from './device/device.component';
 import { DeviceDetailsComponent } from './device-details/device-details.component';
 import { AddDeviceComponent } from './add-device/add-device.component';
 import { DataSchemasModule } from '../data-schemas/data-schemas.module';
+import { EditDeviceDialogComponent } from './edit-device-dialog/edit-device-dialog.component';
 
 
 @NgModule({
-  declarations: [DevicesComponent, DeviceComponent, DeviceDetailsComponent, AddDeviceComponent],
+  declarations: [DevicesComponent, DeviceComponent, DeviceDetailsComponent, AddDeviceComponent, EditDeviceDialogComponent],
   imports: [
     CommonModule,
     SharedModule,
